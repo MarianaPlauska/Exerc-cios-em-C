@@ -1,0 +1,199 @@
+
+#include <stdio.h>
+#define CAP 10
+#define TRUE 1
+#define FALSE 0
+
+int position (int vetor[], int *quantidade, int x)
+
+{
+	int i;
+	
+	for (i = 0; i < *quantidade; i++)
+	{
+		if (vetor[i] == x)
+		{
+			return i;
+		}
+		else
+		{
+			if (vetor[i] > x)
+			{
+				return i;
+			}
+		}
+		
+		if (vetor[i] >= x)
+		{
+			return i;
+		}
+	}
+	return *quantidade;
+}
+
+void inserir (int vetor[], int capacidade, int *quantidade)
+{
+	int pos, i, numero;
+
+	if (*quantidade != capacidade)
+	{
+		printf ("Insira um numero: ");
+		scanf ("%d", &numero);
+		
+		pos = position (vetor, quantidade, numero);
+
+	if (numero != vetor[pos])
+	{
+
+		for (i = *quantidade - 1; i >= pos; i--)
+		{
+			vetor[i + 1] = vetor[i];
+		}
+		
+		vetor[pos] = numero;
+		
+		(*quantidade)++;
+	}
+	}
+}
+
+int remover (int v[], int *quant, int cap)
+{
+    int i, pos, cont = 0;
+    int numero;
+    char opcao;
+
+
+    do
+    {
+         printf ("\n\nDigite o valor a ser removido: ");
+        scanf ("%d", &numero);
+        for (i = 0; i < *quant;)
+        {
+            if (v[i] == numero)
+            {
+                for (pos = i + 1; pos < *quant; pos++)
+                {
+                    v[pos-1] = v[pos];
+                }
+
+                (*quant)--;
+                cont++;
+            }
+            else
+            {
+                i++;
+            }
+        } 
+        printf ("\n\nDeseja remover mais um valor? (s/n): ");
+        fflush(stdin);
+        scanf ("%c", &opcao);
+
+    }while (opcao != 'n');
+
+    if (cont == 0)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+
+}
+
+int buscarvalores (int v[], int tamanho)
+{
+	int i, x, cont = 0;
+	
+	printf ("\n\nQual valor do vetor voce deseja buscar?: ");
+	scanf ("%d", &x);
+	
+	for (i = 0; i < tamanho; i++)
+	{
+		if (x == v[i])
+		{
+			return i;
+		}
+		else
+		{
+			cont++;
+		}
+	}
+	
+	if (cont == tamanho)
+	{
+		return -1;
+	}
+}
+
+void alterarvalores (int v[], int tamanho)
+{
+	int i, x;
+	
+	printf ("\n\nQual valor do vetor voce deseja alterar?: ");
+	scanf ("%d", &x);
+	
+	for (i = 0; i < tamanho; i++)
+	{
+		if (x == v[i])
+		{
+		    inserir (v, CAP, &tamanho);			
+		}
+	}
+}
+
+void exibir (int vetor[], int *tamanho)
+{
+
+    int i;
+
+    printf ("\n\nElementos do vetor: ");
+
+    for (i = 0; i < *tamanho; i++)
+    {
+        printf ("%d ", vetor[i]);
+    }
+
+    printf ("\n\n");
+}
+
+
+void main ()
+{
+   int v[CAP], ocupados, achou, op;
+	
+	do
+	{
+		 printf ("\n\tMenu");
+	printf ("\n\n\t1 para Inserir");
+	printf ("\n\n\t2 para Remover");
+	printf ("\n\n\t3 para Alterar");
+	printf ("\n\n\t4 para Buscar");
+	printf ("\n\n\t5 para Exibir");
+	printf ("\n\n\t6 para Sair");
+	
+	printf ("\n\nO que voce quer fazer? ");
+	scanf ("%d", &op);
+	
+	switch (op)
+	{
+		case 1: inserir (v, CAP, &ocupados);
+		break;
+		case 2: remover (v, &ocupados, CAP);
+		break;
+		case 3: alterarvalores (v, ocupados);
+		break;
+		case 4: achou = buscarvalores (v, ocupados);
+		break;
+		case 5: exibir (v, &ocupados);
+		break;
+		
+		default: printf ("Encerrando...");
+	}
+	
+	} while (op != 6);
+}
+
+
+
