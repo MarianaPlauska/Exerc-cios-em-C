@@ -41,7 +41,6 @@ void main ()
     printf ("\t \t 2 - Subtracao \n");
     printf ("\t \t 3 - Multiplicacao \n");  
     printf ("\t \t 4 - Divisao \n");
-    printf ("\t \t 5 - Sair \n");
 
     printf ("\nDigite a opcao desejada: ");
     scanf ("%d", &op);
